@@ -1,0 +1,62 @@
+<!DOCTYPE cruise-list [ <!ELEMENT cruise-list (cruise*)>
+<!ELEMENT cruise ( ship-name, booking-capacity, departure-date, return-trip, to-port, from-port, bookings )>
+<!ELEMENT ship-name (#PCDATA)>
+<!ELEMENT booking-capacity (#PCDATA)>
+<!ELEMENT departure-date (#PCDATA)>
+<!ELEMENT return-trip (#PCDATA)>
+<!ELEMENT to-port (port-name, city, state, country)>
+<!ELEMENT from-port (port-name, city, state, country)>
+<!ELEMENT port-name (#PCDATA)>
+<!ELEMENT city (#PCDATA)>
+<!ELEMENT state (#PCDATA)>
+<!ELEMENT country (#PCDATA)>
+<!ELEMENT bookings (booking*)>
+<!ELEMENT booking (customer, adults, children, return-trip)>
+<!ELEMENT customer (first-name, last-name, payment-method)>
+<!ELEMENT first-name (#PCDATA)>
+<!ELEMENT last-name (#PCDATA)>
+<!ELEMENT payment-method (#PCDATA)>
+<!ELEMENT adults (#PCDATA)>
+<!ELEMENT children (#PCDATA)>
+]>
+
+<cruise-list>
+    <% for( const cruise of cruises) { %>
+    <cruise>
+        <ship-name><%- cruise.ship_name %></ship-name>
+        <booking-capacity><%- cruise.booking_capacity %></booking-capacity>
+        <departure-date>
+            <%- cruise.departure_date.toDateString() %>
+        </departure-date>
+        <return-trip><%- cruise.return_trip %></return-trip>
+        <to-port>
+            <port-name><%- cruise.to_port.name %></port-name>
+            <city><%- cruise.to_port.city %></city>
+            <state><%- cruise.to_port.state %></state>
+            <country><%- cruise.to_port.country %></country>
+        </to-port>
+        <from-port>
+            <port-name><%- cruise.from_port.name %></port-name>
+            <city><%- cruise.from_port.city %></city>
+            <state><%- cruise.from_port.state %></state>
+            <country><%- cruise.from_port.country %></country>
+        </from-port>
+        <bookings>
+            <% for (const booking of cruise.bookings) { %>
+            <booking>
+                <customer>
+                    <first-name><%- booking.customer.first_name %></first-name>
+                    <last-name><%- booking.customer.last_name %></last-name>
+                    <payment-method>
+                        <%- booking.customer.payment_method %>
+                    </payment-method>
+                </customer>
+                <adults><%- booking.adults %></adults>
+                <children><%- booking.children %></children>
+                <return-trip><%- booking.taking_return_trip %></return-trip>
+            </booking>
+            <% } %>
+        </bookings>
+    </cruise>
+    <% } %>
+</cruise-list>
